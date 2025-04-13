@@ -13,9 +13,6 @@ var tile_size: float
 func _ready() -> void:
 	var size = get_viewport_rect().size
 	tile_size = min(size.x / grid_size.x, size.y / grid_size.y)
-	for i in range(8):
-		$HOLE.occluder.polygon.append(Vector2(sin(i / 8.0 * TAU) * tile_size, cos(i / 8.0 * TAU) * tile_size))
-		
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0, tile_size * grid_size.x, tile_size * grid_size.y), background_color)

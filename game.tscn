@@ -1,16 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://v14xu65rsedv"]
+[gd_scene load_steps=4 format=3 uid="uid://v14xu65rsedv"]
 
 [ext_resource type="Script" uid="uid://8ihith2aq67n" path="res://game.gd" id="1_80nbo"]
 [ext_resource type="Shader" uid="uid://fjun80bgo18n" path="res://gibs.gdshader" id="2_e2o6t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o6t"]
 shader = ExtResource("2_e2o6t")
-shader_parameter/bounds = Vector2(200, 200)
+shader_parameter/bounds = Vector2(360, 360)
 shader_parameter/forceMultiplier = 100000.0
 shader_parameter/destructionRadius = 4.0
 shader_parameter/wallElasticity = 0.5
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mwb40"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_80nbo")
@@ -18,11 +16,7 @@ background_color = Color(0, 0, 0, 1)
 grid_color = Color(0.0605308, 0.0605302, 0.0605303, 1)
 
 [node name="Gibs" type="GPUParticles2D" parent="."]
-position = Vector2(132, 94)
+position = Vector2(206, 168)
 amount = 600
 lifetime = 10.0
 process_material = SubResource("ShaderMaterial_e2o6t")
-
-[node name="HOLE" type="LightOccluder2D" parent="."]
-visible = false
-occluder = SubResource("OccluderPolygon2D_mwb40")

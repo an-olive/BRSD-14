@@ -1,6 +1,6 @@
 shader_type particles;
 
-uniform vec2 bounds = vec2(200, 200);
+uniform vec2 bounds = vec2(360, 360);
 uniform float forceMultiplier = 100000;
 uniform float destructionRadius = 4.0;
 uniform float wallElasticity = 0.5;
