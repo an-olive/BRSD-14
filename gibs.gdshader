@@ -10,8 +10,8 @@ void start() {
 	COLOR = vec4(1, 0, 0, 1);
 	//TRANSFORM = mat4(vec4(1.0, 0.0, 0.0, 0.0), vec4(0.0, 1.0, 0.0, 0.0), vec4(0.0, 0.0, 0.0, 0.0), vec4(0.0, 0.0, 0.0, 1.0)) * EMISSION_TRANSFORM;
 	TRANSFORM = EMISSION_TRANSFORM;
-	TRANSFORM[3].xy = vec2(1, 1);
-	VELOCITY = vec3(abs(cos(TIME)), abs(sin(TIME)), 0) * 30.0;
+	//TRANSFORM[3].xy = vec2(1, 1);
+	VELOCITY = vec3((cos(TIME)), (sin(TIME)), 0) * 30.0;
 }
 
 void process() {

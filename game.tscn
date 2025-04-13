@@ -18,6 +18,7 @@ background_color = Color(0, 0, 0, 1)
 grid_color = Color(0.0605308, 0.0605302, 0.0605303, 1)
 
 [node name="Gibs" type="GPUParticles2D" parent="."]
+position = Vector2(132, 94)
 amount = 600
 lifetime = 10.0
 process_material = SubResource("ShaderMaterial_e2o6t")
