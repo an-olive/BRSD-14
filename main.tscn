@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5nq1t26y817x"]
+[gd_scene load_steps=7 format=3 uid="uid://c5nq1t26y817x"]
 
 [ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://game.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://d2m2b67w24vqt" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="Shader" uid="uid://dw5rglqg026iu" path="res://Shaders/discover.gdshader" id="2_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://q8obw27mr2h5" path="res://Assets/UI/BuildArea_Border.png" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://dmy01tocun156" path="res://Assets/UI/BuildArea_Grid.png" id="3_1bvp3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
+shader = ExtResource("2_1bvp3")
+shader_parameter/pos = Vector2(24.92, 67.005)
+shader_parameter/radius = 50.0
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,8 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Game" parent="." instance=ExtResource("1_ig7tw")]
+script = ExtResource("1_lquwl")
 
 [node name="BuildArea" type="Control" parent="."]
 layout_mode = 1
@@ -29,7 +35,10 @@ offset_bottom = 360.0
 texture = ExtResource("2_h2yge")
 
 [node name="Grid" type="TextureRect" parent="BuildArea"]
+material = SubResource("ShaderMaterial_lquwl")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_1bvp3")
+
+[node name="Game" parent="." instance=ExtResource("1_ig7tw")]
