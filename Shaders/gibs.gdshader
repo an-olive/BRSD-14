@@ -1,10 +1,11 @@
 shader_type particles;
 
-uniform vec2 origin = vec2(9, 9);
-uniform vec2 bounds = vec2(378, 342);
-uniform float forceMultiplier = 100000;
-uniform float destructionRadius = 4.0;
-uniform float wallElasticity = 0.5;
+const vec2 origin = vec2(9, 9);
+const vec2 bounds = vec2(378, 342);
+const float forceMultiplier = 100000.0;
+const float wallElasticity = 0.5;
+const float destructionRadius = 9.0;
+
 uniform vec2 velocity = vec2(0, 0);
 uniform vec3 color = vec3(1, 0, 0);
 
