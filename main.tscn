@@ -8,8 +8,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
 shader = ExtResource("2_1bvp3")
-shader_parameter/pos = Vector2(24.92, 67.005)
-shader_parameter/radius = 50.0
+shader_parameter/pos = Vector2(-1000, -1000)
+shader_parameter/radius = 64.0
 
 [node name="Control" type="Control"]
 layout_mode = 3

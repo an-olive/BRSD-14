@@ -10,13 +10,15 @@ shader_parameter/bounds = Vector2(378, 342)
 shader_parameter/forceMultiplier = 100000.0
 shader_parameter/destructionRadius = 4.0
 shader_parameter/wallElasticity = 0.5
+shader_parameter/velocity = Vector2(0, 0)
+shader_parameter/color = Vector3(1, 0, 0)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_80nbo")
 grid_size = Vector2i(21, 19)
 
 [node name="Gibs" type="GPUParticles2D" parent="."]
-position = Vector2(206, 168)
+emitting = false
 amount = 600
 lifetime = 10.0
 process_material = SubResource("ShaderMaterial_e2o6t")

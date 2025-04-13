@@ -1,8 +1,8 @@
 shader_type canvas_item;
 
-uniform vec2 pos = vec2(0, 0);
-uniform float radius = 50.0;
-//uniform vec4 
+uniform vec2 pos = vec2(-1000, -1000);
+uniform float radius = 64.0;
+//uniform vec4
 
 // clamped lerp
 float clerp(float a, float b, float t) {
