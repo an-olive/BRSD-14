@@ -31,4 +31,7 @@ void process() {
 		TRANSFORM[3].y = clamp(TRANSFORM[3].y, origin.y, origin.y + bounds.y);
 		VELOCITY.y *= -wallElasticity;
 	}
+	if (COLLIDED) {
+		COLOR.rgb = COLLISION_NORMAL;
+	}
 }

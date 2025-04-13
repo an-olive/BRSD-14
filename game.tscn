@@ -1,28 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://v14xu65rsedv"]
+[gd_scene load_steps=5 format=3 uid="uid://v14xu65rsedv"]
 
 [ext_resource type="Script" uid="uid://8ihith2aq67n" path="res://game.gd" id="1_80nbo"]
-[ext_resource type="Shader" uid="uid://fjun80bgo18n" path="res://Shaders/gibs.gdshader" id="2_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://khdnx5d8eo0q" path="res://gibs.tscn" id="3_7jktm"]
 [ext_resource type="Texture2D" uid="uid://cp5loriru8481" path="res://Assets/Buildings/Hole.png" id="3_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://d24kirevx3y5j" path="res://Components/producer.tscn" id="4_fc0e3"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o6t"]
-shader = ExtResource("2_e2o6t")
-shader_parameter/velocity = Vector2(0, 0)
-shader_parameter/color = Vector3(1, 0, 0)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_80nbo")
 
-[node name="Gibs" type="GPUParticles2D" parent="."]
-emitting = false
-amount = 600
-lifetime = 10.0
-process_material = SubResource("ShaderMaterial_e2o6t")
-
 [node name="Hole" type="Sprite2D" parent="."]
+z_index = 2
 position = Vector2(189, 171)
 texture = ExtResource("3_fc0e3")
 centered = false
+
+[node name="Gibs" parent="." instance=ExtResource("3_7jktm")]
 
 [node name="Producer" parent="." instance=ExtResource("4_fc0e3")]
 position = Vector2(189, 72)
