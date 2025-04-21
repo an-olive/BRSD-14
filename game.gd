@@ -10,11 +10,11 @@ extends Node2D
 var tile_size: float
 var mouse_position: Vector2
 var mouse_velocity: Vector2
-	
+
 func _ready() -> void:
 	var size = get_viewport_rect().size
 	tile_size = min(size.x / grid_size.x, size.y / grid_size.y)
-	
+
 func _process(_delta: float) -> void:
 	var prev_position = mouse_position
 	mouse_position = get_viewport().get_mouse_position()
