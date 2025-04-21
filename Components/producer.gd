@@ -11,4 +11,4 @@ func _process(_delta: float) -> void:
 	var direction = randf() * TAU
 	var speed = min_speed + (max_speed - min_speed) * randf()
 	var velocity = Vector2(cos(direction) * speed, sin(direction) * speed)
-	Gibs.spawn_gib(position + Vector2(9, 9), velocity, 0)
+	Gibs.get_instance().spawn_gib(position + Vector2(9, 9), velocity, 0)

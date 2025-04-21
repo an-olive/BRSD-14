@@ -19,14 +19,8 @@ func _process(_delta: float) -> void:
 	var prev_position = mouse_position
 	mouse_position = get_viewport().get_mouse_position()
 	mouse_velocity = mouse_position - prev_position
-	
-#$Gibs.process_material.set_shader_parameter("velocity", mouse_velocity * debug_mouse_spawn_velocity_multiplier)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton or event is InputEventMouseMotion:
 		if event.button_mask & MOUSE_BUTTON_MASK_LEFT:
 			$Gibs.spawn_gib(mouse_position, mouse_velocity)
-			#$Gibs.position = event.position
-			#$Gibs.emitting = true
-		#else:
-			#$Gibs.emitting = false
