@@ -93,7 +93,6 @@ func _ready() -> void:
 		intoTheHole, wallElasticity, velocityLoss, holeRadius)
 
 func _process(delta: float) -> void:
-	var start_len = len(gibs)
 	for gib in gibs:
 		gib.update(delta)
 	if not gibs.all(func(gib): return gib.active):
