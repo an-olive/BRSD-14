@@ -16,7 +16,10 @@ var location: Vector2i = Vector2i(0, 0):
 
 @export_group("Physics", "")
 @export 
-var collisions_enabled = true
+var collisions_enabled = true:
+	set(enabled):
+		collisions_enabled = enabled
+		update_configuration_warnings()
 
 @export_range(0, 1, 0.05)
 var elasticity: float = 1
@@ -29,7 +32,7 @@ func _ready() -> void:
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings = []
 
-	if not collision_shape:
+	if not collision_shape and collisions_enabled:
 		warnings.append("Please set `collision_shape` to a non-empty value.")
 
 	return warnings
