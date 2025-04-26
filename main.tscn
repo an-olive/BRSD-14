@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c5nq1t26y817x"]
 
-[ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://game.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://Components/game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d2m2b67w24vqt" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Shader" uid="uid://dw5rglqg026iu" path="res://Shaders/discover.gdshader" id="2_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://q8obw27mr2h5" path="res://Assets/UI/BuildArea_Border.png" id="2_h2yge"]

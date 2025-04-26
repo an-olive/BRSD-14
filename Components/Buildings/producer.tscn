@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://7xiy0nckhm02"]
+
+[ext_resource type="Texture2D" uid="uid://btls25vxoki2v" path="res://Assets/Buildings/Building_Producer.png" id="1_7i87q"]
+[ext_resource type="Script" uid="uid://duopqsudnhuwe" path="res://Components/Buildings/producer.gd" id="1_benl8"]
+
+[node name="Producer" type="Sprite2D"]
+texture = ExtResource("1_7i87q")
+centered = false
+script = ExtResource("1_benl8")
+collision_shape = NodePath("Collision")
+metadata/_custom_type_script = "uid://cf1qu57v81yjh"
+
+[node name="Collision" type="Polygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(0, 3, 3, 0, 15, 0, 18, 3, 18, 15, 15, 18, 3, 18, 0, 15)

@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://d24kirevx3y5j"]
-
-[ext_resource type="Texture2D" uid="uid://btls25vxoki2v" path="res://Assets/Buildings/Building_Producer.png" id="1_84mof"]
-[ext_resource type="Script" uid="uid://b3loxwq07fpp7" path="res://Components/producer.gd" id="2_crrts"]
-
-[node name="Producer" type="Sprite2D"]
-texture = ExtResource("1_84mof")
-centered = false
-script = ExtResource("2_crrts")
