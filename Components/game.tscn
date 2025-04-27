@@ -34,6 +34,7 @@ metadata/_custom_type_script = "uid://cf1qu57v81yjh"
 
 [node name="Producer" parent="Buildings" instance=ExtResource("4_fc0e3")]
 position = Vector2(189, 81)
+enabled = true
 location = Vector2i(10, 4)
 
 [node name="Label" type="Label" parent="."]
@@ -44,3 +45,5 @@ offset_bottom = 117.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Gibs that have 
 succumbed to the hole: %d"
+
+[connection signal="intoTheHole" from="Gibs" to="." method="_on_gibs_into_the_hole"]

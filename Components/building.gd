@@ -12,7 +12,7 @@ var collision_shape: NodePath:
 var location: Vector2i = Vector2i(0, 0):
 	set(loc):
 		location = loc
-		update_transform()
+		_update_transform()
 
 @export_group("Physics", "")
 @export 
@@ -27,7 +27,7 @@ var elasticity: float = 1
 func _ready() -> void:
 	centered = false
 	update_configuration_warnings()
-	update_transform()
+	_update_transform()
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings = []
@@ -37,9 +37,21 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return warnings
 
-func update_transform() -> void:
+func _update_transform() -> void:
 	if Game.instance == null:
 		return
 	
-	print(Game.instance.tile_size)
 	transform.origin = Vector2(Game.instance.area_origin) + Game.instance.tile_size * location
+
+var _shape: Polygon2D = null
+func get_shape() -> Polygon2D:
+	if not collisions_enabled:
+		if not collision_shape:
+			return null
+		
+	if _shape == null:
+		var node = get_node(collision_shape)
+		if node is Polygon2D:
+			_shape = node
+			
+	return _shape

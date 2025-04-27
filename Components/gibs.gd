@@ -11,17 +11,19 @@ signal intoTheHole(Gib)
 static var gibs: Array[Gib] = []
 static var instance: Gibs
 
+var buildings: Array[Building] = []
+
 class Gib:
 	var pos: Vector2
 	var vel: Vector2
 	var color: Color
-	var active: bool
+	var active: bool = true
+	var just_spawned: bool = true
 
 	func _init(pos: Vector2, vel: Vector2, color: Color) -> void:
 		self.pos = pos
 		self.vel = vel
 		self.color = color
-		self.active = true
 
 	func update(delta: float = 1.0) -> void:
 		var relativeToCenter = Game.instance.hole_position - pos
@@ -38,7 +40,13 @@ class Gib:
 		vel += Vector2(cos(angle), sin(angle)) * force * delta
 		vel *= 1.0 - (Gibs.instance.velocityLoss * delta)
 
+		# Process position
+		var old_pos = pos
+
+		pos += vel * delta
+
 		# Process velocity changes due to location
+		# > game area
 		var origin = Game.instance.area_origin
 		var size = Game.instance.area_size
 		if pos.x < origin.x or pos.x > origin.x + size.x:
@@ -48,8 +56,54 @@ class Gib:
 			pos.y = clamp(pos.y, origin.y, origin.y + size.y)
 			vel.y *= -Gibs.instance.wallElasticity
 
-		# Process position
-		pos += vel * delta
+		# > buildings
+		var collided = false
+		for building in Gibs.instance.buildings:
+			var poly = building.get_shape().polygon
+			var offset = building.transform.origin
+			if Geometry2D.is_point_in_polygon(pos - offset, poly):
+				collided = true
+
+				if just_spawned:
+					continue
+
+				var c = old_pos - offset
+				var d = pos - offset
+
+				var minDist = INF
+				var minDistIndex = -1
+				for i in range(len(poly)):
+					var a = poly[i-1]
+					var b = poly[i]
+
+					var o = Geometry2D.segment_intersects_segment(a, b, c, d)
+
+					if o != null:
+						var co2 = c.distance_squared_to(o)
+						if co2 < minDist:
+							minDist = co2
+							minDistIndex = i
+
+				var a = poly[minDistIndex-1]
+				var b = poly[minDistIndex]
+				var o = Geometry2D.segment_intersects_segment(a, b, c, d)
+
+				# project D onto AB as E
+				var e = Geometry2D.get_closest_point_to_segment(d, a, b)
+
+				# reflect D over E as D' (Dp)
+				var dp = e + (e - d)
+				pos = dp + offset
+
+				# reflect velocity
+				# https://math.stackexchange.com/a/13263/1034217
+				var n = (a - b).normalized()
+				var v = -vel + 2 * vel.dot(n) * n
+				vel = v;
+
+		if just_spawned and not collided:
+			print("%s no longer just spawned" % pos)
+			just_spawned = false
 
 static func spawn_gib(pos: Vector2, velocity: Vector2, hue: float = 0) -> void:
 	var color = Color.from_hsv(hue, 1, 1)
@@ -60,12 +114,20 @@ func _ready() -> void:
 	assert(instance == null, "Gibs must be a single instance")
 	instance = self
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	buildings = []
+	var building_node = Game.instance.find_child("Buildings", false)
+	if building_node != null:
+		for node in building_node.get_children():
+			if node is Building and node.collisions_enabled:
+				buildings.append(node)
+
 	for gib in gibs:
 		gib.update(delta)
 	if not gibs.all(func(gib): return gib.active):
 		gibs = gibs.filter(func(gib): return gib.active)
 
+func _process(delta: float) -> void:
 	var image = Image.create(640, 360, false, Image.FORMAT_RGBA8)
 	image.fill(Color.TRANSPARENT)
 	for gib in gibs:
