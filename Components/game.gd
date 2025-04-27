@@ -19,6 +19,7 @@ var mouse_position: Vector2
 var mouse_velocity: Vector2
 
 var gibs_in_hole: int
+var gibs_collided = 0
 
 static var instance: Game
 
@@ -41,7 +42,7 @@ func _process(_delta: float) -> void:
 	mouse_position = get_viewport().get_mouse_position()
 	mouse_velocity = mouse_position - prev_position
 	
-	$Label.text = "Gibs that have succumbed\nto the hole: %d\n\nGibs in total: %d" % [gibs_in_hole, len(Gibs.gibs)]
+	$Label.text = "Gibs that have succumbed\nto the hole: %d\n\nGibs in total: %d\n\nGibs collided: %d" % [gibs_in_hole, len(Gibs.gibs), gibs_collided]
 
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
@@ -54,3 +55,6 @@ func _input(event: InputEvent) -> void:
 
 func _on_gibs_into_the_hole(_gib: Variant) -> void:
 	gibs_in_hole += 1
+
+func _on_producer_gib_collided(gib: Variant) -> void:
+	gibs_collided += 1

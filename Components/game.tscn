@@ -47,3 +47,4 @@ text = "Gibs that have
 succumbed to the hole: %d"
 
 [connection signal="intoTheHole" from="Gibs" to="." method="_on_gibs_into_the_hole"]
+[connection signal="gib_collided" from="Buildings/Producer" to="." method="_on_producer_gib_collided"]

@@ -67,6 +67,12 @@ class Gib:
 				if just_spawned:
 					continue
 
+				if not building.collisions_enabled:
+					building.gib_overlapping.emit(self)
+					continue
+
+				building.gib_collided.emit(self)
+
 				var c = old_pos - offset
 				var d = pos - offset
 
@@ -119,7 +125,7 @@ func _physics_process(delta: float) -> void:
 	var building_node = Game.instance.find_child("Buildings", false)
 	if building_node != null:
 		for node in building_node.get_children():
-			if node is Building and node.collisions_enabled:
+			if node is Building and node.get_shape():
 				buildings.append(node)
 
 	for gib in gibs:

@@ -24,6 +24,9 @@ var collisions_enabled = true:
 @export_range(0, 1, 0.05)
 var elasticity: float = 1
 
+signal gib_collided(gib)
+signal gib_overlapping(gib)
+
 func _ready() -> void:
 	centered = false
 	update_configuration_warnings()
