@@ -58,3 +58,12 @@ func get_shape() -> Polygon2D:
 			_shape = node
 			
 	return _shape
+	
+static func has_collision(pos: Vector2i) -> bool:
+	var building = []
+	var building_node = Game.instance.find_child("Buildings", false)
+	if building_node != null:
+		for node in building_node.get_children():
+			if node is Building and node.location == pos and node.get_shape():
+				return true
+	return false

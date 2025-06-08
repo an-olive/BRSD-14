@@ -108,7 +108,6 @@ class Gib:
 				vel = v;
 
 		if just_spawned and not collided:
-			print("%s no longer just spawned" % pos)
 			just_spawned = false
 
 static func spawn_gib(pos: Vector2, velocity: Vector2, hue: float = 0) -> void:

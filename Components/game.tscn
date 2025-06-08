@@ -34,7 +34,6 @@ metadata/_custom_type_script = "uid://cf1qu57v81yjh"
 
 [node name="Producer" parent="Buildings" instance=ExtResource("4_fc0e3")]
 position = Vector2(189, 81)
-enabled = true
 location = Vector2i(10, 4)
 
 [node name="Label" type="Label" parent="."]

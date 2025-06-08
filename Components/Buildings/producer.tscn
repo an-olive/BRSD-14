@@ -7,7 +7,6 @@
 texture = ExtResource("1_7i87q")
 centered = false
 script = ExtResource("1_benl8")
-enabled = null
 collision_shape = NodePath("Collision")
 metadata/_custom_type_script = "uid://cf1qu57v81yjh"
 
