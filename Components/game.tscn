@@ -9,6 +9,9 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_80nbo")
+window_duration = null
+force_constant = null
+rotation_constant = null
 
 [node name="Grid" type="TextureRect" parent="."]
 offset_right = 640.0
@@ -42,8 +45,11 @@ offset_top = 68.0
 offset_right = 613.0
 offset_bottom = 117.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Gibs that have 
-succumbed to the hole: %d"
+
+[node name="DebugOverlay" type="Sprite2D" parent="."]
+visible = false
+z_index = 9
+centered = false
 
 [connection signal="intoTheHole" from="Gibs" to="." method="_on_gibs_into_the_hole"]
 [connection signal="gib_collided" from="Buildings/Producer" to="." method="_on_producer_gib_collided"]

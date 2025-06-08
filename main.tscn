@@ -42,3 +42,32 @@ offset_bottom = 40.0
 texture = ExtResource("3_1bvp3")
 
 [node name="Game" parent="." instance=ExtResource("1_ig7tw")]
+window_duration = 5.0
+force_constant = 1.0
+rotation_constant = 1.0
+
+[node name="PauseOverlay" type="ColorRect" parent="."]
+visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.533333)
+
+[node name="Label" type="Label" parent="PauseOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.0
+offset_top = -11.5
+offset_right = 143.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game paused (press ESC to unpause)"

@@ -111,6 +111,9 @@ class Gib:
 			just_spawned = false
 
 static func spawn_gib(pos: Vector2, velocity: Vector2, hue: float = 0) -> void:
+	if Game.instance.paused:
+		return
+		
 	var color = Color.from_hsv(hue, 1, 1)
 	var gib = Gib.new(pos, velocity, color)
 	gibs.append(gib)
@@ -120,6 +123,9 @@ func _ready() -> void:
 	instance = self
 
 func _physics_process(delta: float) -> void:
+	if Game.instance.paused:
+		return
+	
 	buildings = []
 	var building_node = Game.instance.find_child("Buildings", false)
 	if building_node != null:
@@ -138,3 +144,13 @@ func _process(delta: float) -> void:
 	for gib in gibs:
 		image.set_pixel(round(gib.pos.x), round(gib.pos.y), gib.color)
 	texture = ImageTexture.create_from_image(image)
+	
+static func occupied_tiles() -> Dictionary[Vector2i, int]:
+	var tiles: Dictionary[Vector2i, int] = {}
+	for gib in Gibs.instance.gibs:
+		var pos = Vector2i((gib.pos + Vector2(Game.instance.area_origin)) / Game.instance.tile_size)
+		if pos in tiles:
+			tiles[pos] += 1
+		else:
+			tiles[pos] = 1
+	return tiles
