@@ -1,24 +1,45 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5nq1t26y817x"]
+[gd_scene load_steps=20 format=3 uid="uid://c5nq1t26y817x"]
 
 [ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://Components/game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d2m2b67w24vqt" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Shader" uid="uid://dw5rglqg026iu" path="res://Shaders/discover.gdshader" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://bwuvkd4gnlftm" path="res://Assets/reference.png" id="2_074og"]
 [ext_resource type="Texture2D" uid="uid://q8obw27mr2h5" path="res://Assets/UI/BuildArea_Border.png" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://dmy01tocun156" path="res://Assets/UI/BuildArea_Grid.png" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://di2sqbx8v3ayw" path="res://Assets/UI/SidePanel_Icons_Gibs.png" id="5_w48qg"]
+[ext_resource type="Texture2D" uid="uid://d2kqlvi1jr8w5" path="res://Assets/UI/SidePanel_title.png" id="5_yaehf"]
+[ext_resource type="Texture2D" uid="uid://b6c22vc48tw23" path="res://Assets/UI/SidePanel_Icons_Force.png" id="6_vivmo"]
+[ext_resource type="Texture2D" uid="uid://hq0sithx50ek" path="res://Assets/UI/SidePanel_Icons_Rotation.png" id="7_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://cksyqs45b6cov" path="res://Assets/UI/SidePanel_Icons_Expansion.png" id="8_yaehf"]
+[ext_resource type="Texture2D" uid="uid://dq3yk6ymi7ms3" path="res://Assets/UI/SidePanel_Spectrum.png" id="9_074og"]
+[ext_resource type="Texture2D" uid="uid://dc40nknaggo4t" path="res://Assets/UI/SidePanel_Nuke.png" id="10_cegan"]
+[ext_resource type="Texture2D" uid="uid://dr8txf5tphjpl" path="res://Assets/UI/SidePanel_Nuke_Pressed.png" id="11_82xsv"]
+[ext_resource type="Texture2D" uid="uid://dq68cf0ayvx1w" path="res://Assets/UI/SidePanel_Nuke_Hover.png" id="12_getpj"]
+[ext_resource type="Texture2D" uid="uid://tkoecshdmcc8" path="res://Assets/UI/SidePanel_Radio.png" id="13_ryguw"]
+[ext_resource type="Texture2D" uid="uid://cgvrmqlwalhna" path="res://Assets/UI/SidePanel_Inventory.png" id="15_074og"]
+[ext_resource type="Texture2D" uid="uid://dyg7rpkbvyg4b" path="res://Assets/UI/SidePanel_Upgrades.png" id="16_cegan"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
 shader = ExtResource("2_1bvp3")
 shader_parameter/pos = Vector2(-1000, -1000)
 shader_parameter/radius = 64.0
 
-[node name="Control" type="Control"]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_lquwl")
+
+[node name="Reference" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("2_074og")
 
 [node name="BuildArea" type="Control" parent="."]
 layout_mode = 1
@@ -27,6 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Border" type="TextureRect" parent="BuildArea"]
 layout_mode = 0
@@ -42,9 +64,156 @@ offset_bottom = 40.0
 texture = ExtResource("3_1bvp3")
 
 [node name="Game" parent="." instance=ExtResource("1_ig7tw")]
-window_duration = 5.0
-force_constant = 1.0
-rotation_constant = 1.0
+metadata/_edit_lock_ = true
+
+[node name="SidePanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -245.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Title" type="TextureRect" parent="SidePanel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 11.0
+offset_right = 216.0
+offset_bottom = 31.0
+texture = ExtResource("5_yaehf")
+stretch_mode = 3
+
+[node name="Stats" type="Control" parent="SidePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gibs" type="TextureRect" parent="SidePanel/Stats"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 42.0
+offset_right = 23.0
+offset_bottom = 60.0
+texture = ExtResource("5_w48qg")
+stretch_mode = 3
+
+[node name="Value" type="Label" parent="SidePanel/Stats/Gibs"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = -4.0
+offset_right = 80.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "123"
+
+[node name="Force" type="TextureRect" parent="SidePanel/Stats"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 61.0
+offset_right = 23.0
+offset_bottom = 79.0
+texture = ExtResource("6_vivmo")
+stretch_mode = 3
+
+[node name="Value" type="Label" parent="SidePanel/Stats/Force"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = -4.0
+offset_right = 80.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "123"
+
+[node name="Rotation" type="TextureRect" parent="SidePanel/Stats"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 82.0
+offset_right = 23.0
+offset_bottom = 99.0
+texture = ExtResource("7_2cqfq")
+stretch_mode = 3
+
+[node name="Value" type="Label" parent="SidePanel/Stats/Rotation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = -4.0
+offset_right = 80.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "123"
+
+[node name="Expansion" type="TextureRect" parent="SidePanel/Stats"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 101.0
+offset_right = 23.0
+offset_bottom = 119.0
+texture = ExtResource("8_yaehf")
+stretch_mode = 3
+
+[node name="Value" type="Label" parent="SidePanel/Stats/Expansion"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = -4.0
+offset_right = 80.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "123"
+
+[node name="NukeButton" type="TextureButton" parent="SidePanel"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 164.0
+offset_right = 99.0
+offset_bottom = 199.0
+texture_normal = ExtResource("10_cegan")
+texture_pressed = ExtResource("11_82xsv")
+texture_hover = ExtResource("12_getpj")
+
+[node name="Radio" type="TextureRect" parent="SidePanel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 167.0
+offset_right = 56.0
+offset_bottom = 269.0
+texture = ExtResource("13_ryguw")
+
+[node name="Spectrum" type="TextureRect" parent="SidePanel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 277.0
+offset_right = 100.0
+offset_bottom = 332.0
+texture = ExtResource("9_074og")
+
+[node name="Inventory" type="TextureRect" parent="SidePanel"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 40.0
+offset_right = 236.0
+offset_bottom = 150.0
+texture = ExtResource("15_074og")
+
+[node name="Upgrades" type="TextureRect" parent="SidePanel"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 195.0
+offset_right = 236.0
+offset_bottom = 354.0
+texture = ExtResource("16_cegan")
 
 [node name="PauseOverlay" type="ColorRect" parent="."]
 visible = false
@@ -55,6 +224,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.533333)
 
 [node name="Label" type="Label" parent="PauseOverlay"]

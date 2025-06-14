@@ -6,9 +6,7 @@ class_name Game
 @export var grid_size: Vector2i = Vector2i(21, 19)
 @export var hole_radius: float = 9
 
-@export_category("Area")
-@export var area_origin: Vector2i = Vector2i(9, 9)
-@export var area_size: Vector2i = Vector2i(377, 341)
+@export var area: Rect2i = Rect2i(9, 9, 377, 341)
 
 @export_category("Gibs")
 @export var spawn_rate: float = 30
@@ -19,6 +17,15 @@ class_name Game
 @export var window_duration: float = 5
 @export var force_constant: float = 1
 @export var rotation_constant: float = 1
+
+
+class GameStats:
+	var gibs: int
+	var force: float
+	var rotation: float
+	var expansion: float
+
+var stats: GameStats = GameStats.new()
 
 var tile_size: float
 var hole_position: Vector2
@@ -63,10 +70,10 @@ func _ready() -> void:
 	#assert(instance == null, "Game must be a single instance")
 	instance = self
 	
-	hole_position = Vector2(area_origin) + Vector2(area_size) / 2
+	hole_position = Vector2(area.position) + Vector2(area.size) / 2
 	
-	assert(float(area_size.x + 1) / grid_size.x == float(area_size.y + 1) / grid_size.y, "Grid tiles must be squre")
-	tile_size = float(area_size.x + 1) / grid_size.x
+	assert(float(area.size.x + 1) / grid_size.x == float(area.size.y + 1) / grid_size.y, "Grid tiles must be squre")
+	tile_size = float(area.size.x + 1) / grid_size.x
 	
 	$Grid.visible = Engine.is_editor_hint()
 
@@ -82,9 +89,12 @@ func _process(delta: float) -> void:
 		return
 		
 	game_time += delta
+	
+	stats.gibs = gibs_in_hole
+	
 	recent_gibs_in_hole = recent_gibs_in_hole.filter(func(rg): return rg.time + window_duration > game_time)
-	var force = recent_gibs_in_hole.reduce(func(acc, rg): return acc + rg.velocity_towards_hole(), 0.0) * force_constant
-	var rotation = recent_gibs_in_hole.reduce(func(acc, rg): return acc + rg.velocity_perpendicular_to_hole(), 0.0) * rotation_constant
+	stats.force = recent_gibs_in_hole.reduce(func(acc, rg): return acc + rg.velocity_towards_hole(), 0.0) * force_constant
+	stats.rotation = recent_gibs_in_hole.reduce(func(acc, rg): return acc + rg.velocity_perpendicular_to_hole(), 0.0) * rotation_constant
 	
 	var occupied_tiles = Gibs.occupied_tiles()
 	recent_gib_expansion.append(_RecentInt.new(len(occupied_tiles)))
@@ -93,18 +103,16 @@ func _process(delta: float) -> void:
 		var image = Image.create(640, 360, false, Image.FORMAT_RGBA8)
 		image.fill(Color.TRANSPARENT)
 		for t in occupied_tiles:
-			image.fill_rect(Rect2i(t * int(tile_size) - area_origin, Vector2i(tile_size, tile_size)), Color(0, 1, 0, log(occupied_tiles[t])/10+.1))
+			image.fill_rect(Rect2i(t * int(tile_size) - area.position, Vector2i(tile_size, tile_size)), Color(0, 1, 0, log(occupied_tiles[t])/10+.1))
 		$DebugOverlay.texture = ImageTexture.create_from_image(image)
-	var expansion = recent_gib_expansion.reduce(func(acc, v): return acc + v.value, 0) / len(recent_gib_expansion)
-	
-	$Label.text = "$: %d\nforce: %d\nrotation: %d\nexpansion: %d" % [gibs_in_hole, force, rotation, expansion]
+	stats.expansion = recent_gib_expansion.reduce(func(acc, v): return acc + v.value, 0) / len(recent_gib_expansion)
 
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
 		
 	if event is InputEventMouseButton or event is InputEventMouseMotion:
-		if event.button_mask & MOUSE_BUTTON_MASK_LEFT:
+		if event.button_mask & MOUSE_BUTTON_MASK_LEFT and area.has_point(mouse_position):
 			Gibs.spawn_gib(mouse_position, mouse_velocity)
 			
 	if event.is_action_pressed("debug_overlay"):

@@ -9,9 +9,6 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_80nbo")
-window_duration = null
-force_constant = null
-rotation_constant = null
 
 [node name="Grid" type="TextureRect" parent="."]
 offset_right = 640.0
@@ -38,13 +35,6 @@ metadata/_custom_type_script = "uid://cf1qu57v81yjh"
 [node name="Producer" parent="Buildings" instance=ExtResource("4_fc0e3")]
 position = Vector2(189, 81)
 location = Vector2i(10, 4)
-
-[node name="Label" type="Label" parent="."]
-offset_left = 404.0
-offset_top = 68.0
-offset_right = 613.0
-offset_bottom = 117.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 
 [node name="DebugOverlay" type="Sprite2D" parent="."]
 visible = false

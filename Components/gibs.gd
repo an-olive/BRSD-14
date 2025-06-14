@@ -47,8 +47,8 @@ class Gib:
 
 		# Process velocity changes due to location
 		# > game area
-		var origin = Game.instance.area_origin
-		var size = Game.instance.area_size
+		var origin = Game.instance.area.position
+		var size = Game.instance.area.size
 		if pos.x < origin.x or pos.x > origin.x + size.x:
 			pos.x = clamp(pos.x, origin.x, origin.x + size.x)
 			vel.x *= -Gibs.instance.wallElasticity
@@ -148,7 +148,7 @@ func _process(delta: float) -> void:
 static func occupied_tiles() -> Dictionary[Vector2i, int]:
 	var tiles: Dictionary[Vector2i, int] = {}
 	for gib in Gibs.instance.gibs:
-		var pos = Vector2i((gib.pos + Vector2(Game.instance.area_origin)) / Game.instance.tile_size)
+		var pos = Vector2i((gib.pos + Vector2(Game.instance.area.position)) / Game.instance.tile_size)
 		if pos in tiles:
 			tiles[pos] += 1
 		else:

@@ -44,7 +44,7 @@ func _update_transform() -> void:
 	if Game.instance == null:
 		return
 	
-	transform.origin = Vector2(Game.instance.area_origin) + Game.instance.tile_size * location
+	transform.origin = Vector2(Game.instance.area.position) + Game.instance.tile_size * location
 
 var _shape: Polygon2D = null
 func get_shape() -> Polygon2D:
