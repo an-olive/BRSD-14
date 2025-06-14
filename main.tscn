@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c5nq1t26y817x"]
+[gd_scene load_steps=25 format=3 uid="uid://c5nq1t26y817x"]
 
 [ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://Components/game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d2m2b67w24vqt" path="res://main.gd" id="1_lquwl"]
@@ -18,6 +18,11 @@
 [ext_resource type="Texture2D" uid="uid://tkoecshdmcc8" path="res://Assets/UI/SidePanel_Radio.png" id="13_ryguw"]
 [ext_resource type="Texture2D" uid="uid://cgvrmqlwalhna" path="res://Assets/UI/SidePanel_Inventory.png" id="15_074og"]
 [ext_resource type="Texture2D" uid="uid://dyg7rpkbvyg4b" path="res://Assets/UI/SidePanel_Upgrades.png" id="16_cegan"]
+[ext_resource type="Theme" uid="uid://b0pitp2mmly78" path="res://buttons.tres" id="17_cegan"]
+[ext_resource type="Texture2D" uid="uid://y70uq58etyvu" path="res://Assets/UI/Icon_gibs.png" id="19_82xsv"]
+[ext_resource type="Texture2D" uid="uid://b6w7rtd84ols2" path="res://Assets/UI/Icon_rotation.png" id="20_d13ii"]
+[ext_resource type="Texture2D" uid="uid://bygma77c11y8x" path="res://Assets/UI/Icon_force.png" id="21_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://ineo1jimvly6" path="res://Assets/UI/Icon_expansion.png" id="22_0odxb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
 shader = ExtResource("2_1bvp3")
@@ -199,6 +204,14 @@ offset_right = 100.0
 offset_bottom = 332.0
 texture = ExtResource("9_074og")
 
+[node name="Button" type="Button" parent="SidePanel/Spectrum"]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 96.0
+offset_bottom = 77.0
+theme = ExtResource("17_cegan")
+text = "upgrade"
+
 [node name="Inventory" type="TextureRect" parent="SidePanel"]
 layout_mode = 0
 offset_left = 108.0
@@ -206,6 +219,77 @@ offset_top = 40.0
 offset_right = 236.0
 offset_bottom = 150.0
 texture = ExtResource("15_074og")
+
+[node name="GibsButton" type="Button" parent="SidePanel/Inventory"]
+layout_mode = 0
+offset_top = 111.0
+offset_right = 63.0
+offset_bottom = 128.0
+theme = ExtResource("17_cegan")
+text = "  !1054"
+alignment = 0
+
+[node name="Icon" type="TextureRect" parent="SidePanel/Inventory/GibsButton"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 15.0
+offset_bottom = 14.0
+texture = ExtResource("19_82xsv")
+stretch_mode = 3
+
+[node name="RotationButton" type="Button" parent="SidePanel/Inventory"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 111.0
+offset_right = 128.0
+offset_bottom = 128.0
+theme = ExtResource("17_cegan")
+text = "  541"
+alignment = 0
+
+[node name="Icon" type="TextureRect" parent="SidePanel/Inventory/RotationButton"]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 15.0
+offset_bottom = 14.0
+texture = ExtResource("20_d13ii")
+stretch_mode = 3
+
+[node name="ForceButton" type="Button" parent="SidePanel/Inventory"]
+layout_mode = 0
+offset_top = 129.0
+offset_right = 63.0
+offset_bottom = 146.0
+theme = ExtResource("17_cegan")
+text = "  322"
+alignment = 0
+
+[node name="Icon" type="TextureRect" parent="SidePanel/Inventory/ForceButton"]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 15.0
+offset_bottom = 14.0
+texture = ExtResource("21_1u8w0")
+stretch_mode = 3
+
+[node name="ExpansionButton" type="Button" parent="SidePanel/Inventory"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 129.0
+offset_right = 128.0
+offset_bottom = 146.0
+theme = ExtResource("17_cegan")
+text = "  3!"
+alignment = 0
+
+[node name="Icon" type="TextureRect" parent="SidePanel/Inventory/ExpansionButton"]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 15.0
+offset_bottom = 14.0
+texture = ExtResource("22_0odxb")
+stretch_mode = 3
 
 [node name="Upgrades" type="TextureRect" parent="SidePanel"]
 layout_mode = 0

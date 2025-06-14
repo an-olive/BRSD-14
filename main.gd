@@ -1,5 +1,10 @@
 extends Control
 
+func _ready() -> void:
+	for btn in $SidePanel/Inventory.get_children():
+		btn.connect("button_down", func(): btn.get_child(0).position += Vector2(1, 1))
+		btn.connect("button_up", func(): btn.get_child(0).position -= Vector2(1, 1))
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		$BuildArea/Grid.material.set_shader_parameter("pos", event.position)
