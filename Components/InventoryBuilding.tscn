@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlywps7ocppd4"]
+
+[ext_resource type="Script" uid="uid://cgt3pgrv0y45l" path="res://Components/InventoryBuilding.gd" id="1_cwo0k"]
+[ext_resource type="Texture2D" uid="uid://btls25vxoki2v" path="res://Assets/Buildings/Building_Producer.png" id="1_f63xb"]
+[ext_resource type="Texture2D" uid="uid://bgbky77n3acfl" path="res://Assets/UI/Button_active.png" id="3_flwxp"]
+[ext_resource type="Texture2D" uid="uid://dmy01tocun156" path="res://Assets/UI/BuildArea_Grid.png" id="4_flwxp"]
+[ext_resource type="Shader" uid="uid://btscp6rqrwl0r" path="res://Shaders/InventoryBuilding.gdshader" id="5_3anb5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_swosx"]
+shader = ExtResource("5_3anb5")
+shader_parameter/is_valid = false
+shader_parameter/lighten = 0.75
+shader_parameter/invalid_red = 2.0
+shader_parameter/opacity = 0.75
+
+[node name="InventoryBuilding" type="TextureRect"]
+texture = ExtResource("1_f63xb")
+script = ExtResource("1_cwo0k")
+lighten = 0.5
+invalid_red = 1.75
+opacity = 0.9
+
+[node name="Outline" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_flwxp")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="Grid" type="TextureRect" parent="."]
+visible = false
+top_level = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_flwxp")
+
+[node name="Ghost" type="TextureRect" parent="."]
+visible = false
+top_level = true
+material = SubResource("ShaderMaterial_swosx")
+layout_mode = 0
+offset_right = 18.0
+offset_bottom = 18.0
+texture = ExtResource("1_f63xb")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Ghost" to="." method="_on_gui_input"]

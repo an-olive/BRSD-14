@@ -92,7 +92,7 @@ class Gib:
 
 				var a = poly[minDistIndex-1]
 				var b = poly[minDistIndex]
-				var o = Geometry2D.segment_intersects_segment(a, b, c, d)
+				#var o = Geometry2D.segment_intersects_segment(a, b, c, d)
 
 				# project D onto AB as E
 				var e = Geometry2D.get_closest_point_to_segment(d, a, b)
@@ -113,7 +113,7 @@ class Gib:
 static func spawn_gib(pos: Vector2, velocity: Vector2, hue: float = 0) -> void:
 	if Game.instance.paused:
 		return
-		
+
 	var color = Color.from_hsv(hue, 1, 1)
 	var gib = Gib.new(pos, velocity, color)
 	gibs.append(gib)
@@ -125,7 +125,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if Game.instance.paused:
 		return
-	
+
 	buildings = []
 	var building_node = Game.instance.find_child("Buildings", false)
 	if building_node != null:
@@ -138,13 +138,13 @@ func _physics_process(delta: float) -> void:
 	if not gibs.all(func(gib): return gib.active):
 		gibs = gibs.filter(func(gib): return gib.active)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var image = Image.create(640, 360, false, Image.FORMAT_RGBA8)
 	image.fill(Color.TRANSPARENT)
 	for gib in gibs:
 		image.set_pixel(round(gib.pos.x), round(gib.pos.y), gib.color)
 	texture = ImageTexture.create_from_image(image)
-	
+
 static func occupied_tiles() -> Dictionary[Vector2i, int]:
 	var tiles: Dictionary[Vector2i, int] = {}
 	for gib in Gibs.instance.gibs:

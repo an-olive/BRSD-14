@@ -249,6 +249,7 @@ text = "  541"
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/RotationButton"]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 3.0
 offset_right = 15.0
@@ -266,6 +267,7 @@ text = "  322"
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/ForceButton"]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 3.0
 offset_right = 15.0
@@ -284,12 +286,23 @@ text = "  3!"
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/ExpansionButton"]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 3.0
 offset_right = 15.0
 offset_bottom = 14.0
 texture = ExtResource("22_0odxb")
 stretch_mode = 3
+
+[node name="Buildings" type="GridContainer" parent="SidePanel/Inventory"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 123.0
+offset_bottom = 83.0
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 6
 
 [node name="Upgrades" type="TextureRect" parent="SidePanel"]
 layout_mode = 0
@@ -325,3 +338,5 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Game paused (press ESC to unpause)"
+
+[connection signal="buildings_change" from="Game" to="." method="_on_game_buildings_change"]
