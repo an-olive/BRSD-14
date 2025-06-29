@@ -1,10 +1,14 @@
 extends Control
 
+const Producer = preload("res://Components/Buildings/producer.tscn")
+
 func _ready() -> void:
 	for btn in $SidePanel/Inventory.get_children():
 		if btn is Button:
 			btn.connect("button_down", func(): btn.get_child(0).position += Vector2(1, 1))
 			btn.connect("button_up", func(): btn.get_child(0).position -= Vector2(1, 1))
+			
+	_on_game_costs_change()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -15,10 +19,19 @@ func _input(event: InputEvent) -> void:
 		$PauseOverlay.visible = Game.instance.paused
 
 func _process(delta: float) -> void:
-	$SidePanel/Stats/Gibs/Value.text = "%d" % $Game.stats.gibs
-	$SidePanel/Stats/Force/Value.text = "%d" % $Game.stats.force
-	$SidePanel/Stats/Rotation/Value.text = "%d" % $Game.stats.rotation
-	$SidePanel/Stats/Expansion/Value.text = "%d" % $Game.stats.expansion
+	$SidePanel/Stats/Gibs/Value.text = Game.int_to_string($Game.stats.gibs)
+	$SidePanel/Stats/Force/Value.text = Game.int_to_string($Game.stats.force)
+	$SidePanel/Stats/Rotation/Value.text = Game.int_to_string($Game.stats.rotation)
+	$SidePanel/Stats/Expansion/Value.text = Game.int_to_string($Game.stats.expansion)
+	
+	$SidePanel/Inventory/GibsButton.disabled = $Game.gib_costs.front() == null \
+			or $Game.gib_costs.front() > $Game.stats.gibs
+	$SidePanel/Inventory/ForceButton.disabled = $Game.force_milestones.front() == null \
+			or $Game.force_milestones.front() > $Game.stats.max_force
+	$SidePanel/Inventory/RotationButton.disabled = $Game.rotation_milestones.front() == null \
+			or $Game.rotation_milestones.front() > $Game.stats.max_rotation
+	$SidePanel/Inventory/ExpansionButton.disabled = $Game.expansion_milestones.front() == null \
+			or $Game.expansion_milestones.front() > $Game.stats.max_expansion
 
 func _on_game_buildings_change() -> void:
 	for building in $SidePanel/Inventory/Buildings.get_children():
@@ -40,3 +53,14 @@ func on_building_place(building: InventoryBuilding) -> void:
 	if not building.building.is_valid_position(building.location):
 		return
 	$Game.place_building(building)
+
+func _on_game_costs_change() -> void:
+	$SidePanel/Inventory/GibsButton.text = Game.int_to_string($Game.gib_costs.front())
+	$SidePanel/Inventory/ForceButton.text = Game.int_to_string($Game.force_milestones.front())
+	$SidePanel/Inventory/RotationButton.text = Game.int_to_string($Game.rotation_milestones.front())
+	$SidePanel/Inventory/ExpansionButton.text = Game.int_to_string($Game.expansion_milestones.front())
+
+func _on_game_building_purchase() -> void:
+	var building = Producer.instantiate().as_inventory()
+	$Game.stats.buildings.append(building)
+	_on_game_buildings_change()

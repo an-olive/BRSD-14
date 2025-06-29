@@ -344,4 +344,10 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Game paused (press ESC to unpause)"
 
+[connection signal="building_purchase" from="Game" to="." method="_on_game_building_purchase"]
 [connection signal="buildings_change" from="Game" to="." method="_on_game_buildings_change"]
+[connection signal="costs_change" from="Game" to="." method="_on_game_costs_change"]
+[connection signal="pressed" from="SidePanel/Inventory/GibsButton" to="Game" method="purchase_with_gibs"]
+[connection signal="pressed" from="SidePanel/Inventory/RotationButton" to="Game" method="purchase_with_rotation"]
+[connection signal="pressed" from="SidePanel/Inventory/ForceButton" to="Game" method="purchase_with_force"]
+[connection signal="pressed" from="SidePanel/Inventory/ExpansionButton" to="Game" method="purchase_with_expansion"]

@@ -18,19 +18,27 @@ class_name Game
 @export var force_constant: float = 1
 @export var rotation_constant: float = 1
 
-
-const Producer = preload("res://Components/Buildings/producer.tscn")
+@export_category("Cost Lists")
+@export var gib_costs: Array[int] = [20, 40, 80]
+@export var rotation_milestones: Array[int] = []
+@export var force_milestones: Array[int] = []
+@export var expansion_milestones: Array[int] = []
+signal costs_change
+signal building_purchase
 
 
 class GameStats:
-	var gibs: int
-	var force: float
-	var rotation: float
-	var expansion: float
-	var buildings: Array[InventoryBuilding]
+	var gibs: int = 0
+	var force: float = 0
+	var rotation: float = 0
+	var expansion: float = 0
+	var max_force: float = 0
+	var max_rotation: float = 0
+	var max_expansion: float = 0
+	var buildings: Array[InventoryBuilding] = []
 
 var stats: GameStats = GameStats.new()
-signal buildings_change;
+signal buildings_change
 
 var tile_size: float
 var hole_position: Vector2
@@ -38,8 +46,6 @@ var mouse_position: Vector2
 var mouse_velocity: Vector2
 
 var game_time: float = 0
-
-var gibs_in_hole: int
 
 class _RecentGib:
 	var gib: Gibs.Gib
@@ -71,6 +77,11 @@ var recent_gib_expansion: Array[_RecentInt]
 
 static var instance: Game
 
+static func int_to_string(value: Variant, fallback: String = "N/A") -> String:
+	if value is int or value is float:
+		return str(floori(value))
+	return fallback
+
 func _ready() -> void:
 	#assert(instance == null, "Game must be a single instance")
 	instance = self
@@ -81,11 +92,6 @@ func _ready() -> void:
 	tile_size = float(area.size.x + 1) / grid_size.x
 
 	$Grid.visible = Engine.is_editor_hint()
-
-	for i in range(8):
-		var building = Producer.instantiate().as_inventory()
-		stats.buildings.append(building)
-	buildings_change.emit()
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -99,8 +105,6 @@ func _process(delta: float) -> void:
 		return
 
 	game_time += delta
-
-	stats.gibs = gibs_in_hole
 
 	recent_gibs_in_hole = recent_gibs_in_hole.filter(func(rg): return rg.time + window_duration > game_time)
 	stats.force = recent_gibs_in_hole.reduce(func(acc, rg): return acc + rg.velocity_towards_hole(), 0.0) * force_constant
@@ -116,6 +120,10 @@ func _process(delta: float) -> void:
 			image.fill_rect(Rect2i(t * int(tile_size) - area.position, Vector2i(tile_size, tile_size)), Color(0, 1, 0, log(occupied_tiles[t])/10+.1))
 		$DebugOverlay.texture = ImageTexture.create_from_image(image)
 	stats.expansion = recent_gib_expansion.reduce(func(acc, v): return acc + v.value, 0) / len(recent_gib_expansion)
+	
+	stats.max_force = maxf(stats.max_force, stats.force)
+	stats.max_rotation = maxf(stats.max_rotation, stats.rotation)
+	stats.max_expansion = maxf(stats.max_expansion, stats.expansion)
 
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
@@ -136,10 +144,38 @@ func place_building(building: InventoryBuilding) -> void:
 	building.building.location = building.location
 	$Buildings.add_child(building.building)
 	buildings_change.emit()
+	
+func purchase_with_gibs() -> void:
+	if stats.gibs < gib_costs.front():
+		return
+	stats.gibs -= gib_costs.pop_front()
+	costs_change.emit()
+	building_purchase.emit()
+
+func purchase_with_rotation() -> void:
+	if stats.max_rotation < rotation_milestones.front():
+		return
+	rotation_milestones.pop_front()
+	costs_change.emit()
+	building_purchase.emit()
+	
+func purchase_with_force() -> void:
+	if stats.max_force < force_milestones.front():
+		return
+	force_milestones.pop_front()
+	costs_change.emit()
+	building_purchase.emit()
+	
+func purchase_with_expansion() -> void:
+	if stats.max_expansion < expansion_milestones.front():
+		return
+	expansion_milestones.pop_front()
+	costs_change.emit()
+	building_purchase.emit()
 
 
 func _on_gibs_into_the_hole(_gib: Variant) -> void:
-	gibs_in_hole += 1
+	stats.gibs += 1
 	recent_gibs_in_hole.append(_RecentGib.new(_gib))
 
 func _on_producer_gib_collided(_gib: Variant) -> void:
