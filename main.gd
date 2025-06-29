@@ -1,8 +1,10 @@
 extends Control
 
-const Producer = preload("res://Components/Buildings/producer.tscn")
+const Building = preload("res://Components/building.gd")
 
 func _ready() -> void:
+	Building.init_weights()
+	
 	for btn in $SidePanel/Inventory.get_children():
 		if btn is Button:
 			btn.connect("button_down", func(): btn.get_child(0).position += Vector2(1, 1))
@@ -24,13 +26,13 @@ func _process(delta: float) -> void:
 	$SidePanel/Stats/Rotation/Value.text = Game.int_to_string($Game.stats.rotation)
 	$SidePanel/Stats/Expansion/Value.text = Game.int_to_string($Game.stats.expansion)
 	
-	$SidePanel/Inventory/GibsButton.disabled = $Game.gib_costs.front() == null \
+	$SidePanel/Inventory/GibsButton.disabled = $Game.gib_costs.is_empty() \
 			or $Game.gib_costs.front() > $Game.stats.gibs
-	$SidePanel/Inventory/ForceButton.disabled = $Game.force_milestones.front() == null \
+	$SidePanel/Inventory/ForceButton.disabled = $Game.force_milestones.is_empty() \
 			or $Game.force_milestones.front() > $Game.stats.max_force
-	$SidePanel/Inventory/RotationButton.disabled = $Game.rotation_milestones.front() == null \
+	$SidePanel/Inventory/RotationButton.disabled = $Game.rotation_milestones.is_empty() \
 			or $Game.rotation_milestones.front() > $Game.stats.max_rotation
-	$SidePanel/Inventory/ExpansionButton.disabled = $Game.expansion_milestones.front() == null \
+	$SidePanel/Inventory/ExpansionButton.disabled = $Game.expansion_milestones.is_empty() \
 			or $Game.expansion_milestones.front() > $Game.stats.max_expansion
 
 func _on_game_buildings_change() -> void:
@@ -61,6 +63,6 @@ func _on_game_costs_change() -> void:
 	$SidePanel/Inventory/ExpansionButton.text = Game.int_to_string($Game.expansion_milestones.front())
 
 func _on_game_building_purchase() -> void:
-	var building = Producer.instantiate().as_inventory()
+	var building = Building.buildings["Producer"].instantiate().as_inventory()
 	$Game.stats.buildings.append(building)
 	_on_game_buildings_change()

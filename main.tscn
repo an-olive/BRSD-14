@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c5nq1t26y817x"]
+[gd_scene load_steps=27 format=3 uid="uid://c5nq1t26y817x"]
 
 [ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://Components/game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d2m2b67w24vqt" path="res://main.gd" id="1_lquwl"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://b6w7rtd84ols2" path="res://Assets/UI/Icon_rotation.png" id="20_d13ii"]
 [ext_resource type="Texture2D" uid="uid://bygma77c11y8x" path="res://Assets/UI/Icon_force.png" id="21_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://ineo1jimvly6" path="res://Assets/UI/Icon_expansion.png" id="22_0odxb"]
+[ext_resource type="PackedScene" uid="uid://he13cj645qu1" path="res://Components/spinner.tscn" id="24_0odxb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
 shader = ExtResource("2_1bvp3")
@@ -308,6 +309,8 @@ offset_bottom = 83.0
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
 columns = 6
+
+[node name="Spinner" parent="SidePanel/Inventory" instance=ExtResource("24_0odxb")]
 
 [node name="Upgrades" type="TextureRect" parent="SidePanel"]
 layout_mode = 0

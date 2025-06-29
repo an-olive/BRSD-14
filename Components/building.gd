@@ -4,6 +4,12 @@ class_name Building extends Sprite2D
 
 const InventoryBuilding = preload("res://Components/InventoryBuilding.tscn")
 
+static var buildings: Dictionary[String, Resource] = {
+	"Producer": preload("res://Components/Buildings/producer.tscn")
+}
+static var weights: Dictionary[String, float] = {}:
+	get():
+		return weights
 
 @export_node_path("Polygon2D")
 var collision_shape: NodePath:
@@ -16,6 +22,8 @@ var location: Vector2i = Vector2i(0, 0):
 	set(loc):
 		location = loc
 		_update_transform()
+		
+@export var weight: float = 1
 
 @export_group("Physics", "")
 @export
@@ -30,6 +38,9 @@ var elasticity: float = 1
 signal gib_collided(gib)
 signal gib_overlapping(gib)
 
+static func init_weights() -> void:
+	for name in buildings:
+		weights[name] = buildings[name].instantiate().weight
 
 func _ready() -> void:
 	centered = false
