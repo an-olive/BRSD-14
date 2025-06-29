@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c5nq1t26y817x"]
+[gd_scene load_steps=26 format=3 uid="uid://c5nq1t26y817x"]
 
 [ext_resource type="PackedScene" uid="uid://v14xu65rsedv" path="res://Components/game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d2m2b67w24vqt" path="res://main.gd" id="1_lquwl"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cgvrmqlwalhna" path="res://Assets/UI/SidePanel_Inventory.png" id="15_074og"]
 [ext_resource type="Texture2D" uid="uid://dyg7rpkbvyg4b" path="res://Assets/UI/SidePanel_Upgrades.png" id="16_cegan"]
 [ext_resource type="Theme" uid="uid://b0pitp2mmly78" path="res://buttons.tres" id="17_cegan"]
+[ext_resource type="Texture2D" uid="uid://cx1hrmaimcmp3" path="res://Assets/UI/Icon_empty.png" id="19_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://y70uq58etyvu" path="res://Assets/UI/Icon_gibs.png" id="19_82xsv"]
 [ext_resource type="Texture2D" uid="uid://b6w7rtd84ols2" path="res://Assets/UI/Icon_rotation.png" id="20_d13ii"]
 [ext_resource type="Texture2D" uid="uid://bygma77c11y8x" path="res://Assets/UI/Icon_force.png" id="21_1u8w0"]
@@ -226,7 +227,8 @@ offset_top = 111.0
 offset_right = 63.0
 offset_bottom = 128.0
 theme = ExtResource("17_cegan")
-text = "  !1054"
+text = "!1054"
+icon = ExtResource("19_1u8w0")
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/GibsButton"]
@@ -245,7 +247,8 @@ offset_top = 111.0
 offset_right = 128.0
 offset_bottom = 128.0
 theme = ExtResource("17_cegan")
-text = "  541"
+text = "541"
+icon = ExtResource("19_1u8w0")
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/RotationButton"]
@@ -263,7 +266,8 @@ offset_top = 129.0
 offset_right = 63.0
 offset_bottom = 146.0
 theme = ExtResource("17_cegan")
-text = "  322"
+text = "322"
+icon = ExtResource("19_1u8w0")
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/ForceButton"]
@@ -282,7 +286,8 @@ offset_top = 129.0
 offset_right = 128.0
 offset_bottom = 146.0
 theme = ExtResource("17_cegan")
-text = "  3!"
+text = "3!"
+icon = ExtResource("19_1u8w0")
 alignment = 0
 
 [node name="Icon" type="TextureRect" parent="SidePanel/Inventory/ExpansionButton"]
